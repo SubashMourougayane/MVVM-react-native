@@ -7,32 +7,12 @@ export default class App extends React.Component {
       uname:'',
       pass:''
     }  
-  
-  unameHandler = (text) =>{
-    this.setState({
-      uname:text
-    })
-  }
-  passHandler = (text) =>{
-    this.setState({
-      pass:text
-    })
-  }
-  login(){
-      const VM = new ViewModel(this.state.uname,this.state.pass);
-      if(VM.validateLogin()){
-        Alert.alert("Sucess");
-      }
-      else{
-        Alert.alert("Failed")
-      }
-  }
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.heading}>MVVM Sample </Text>
         <TextInput
-            onChangeText = {this.unameHandler}
+            onChangeText = {(text)=>this.setState({uname:text})}
             style = {styles.textinp}
             placeholder = "User Name"
             placeholderTextColor = '#aaa'
@@ -40,14 +20,17 @@ export default class App extends React.Component {
         />
         
         <TextInput
-            onChangeText = {this.passHandler}
+            onChangeText = {(text)=>this.setState({pass:text})}
             style = {styles.textinp}
             placeholder = "Password"
             placeholderTextColor = '#aaa'
             underlineColorAndroid = '#000'
         />
         <Button
-          onPress={()=>this.login()}
+          onPress={()=>{
+            var VM = new ViewModel(this.state.uname,this.state.pass);
+            Alert.alert(VM.login());
+          }}
           style = {styles.button}
           title="Login"
         />
